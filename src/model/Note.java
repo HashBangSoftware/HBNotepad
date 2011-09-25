@@ -4,27 +4,25 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-
 public class Note implements Parcelable
 {
 	private String title;
 	private String due_date;
 	private String body;
-	
+
 	public Note(String title, String due_date, String body)
 	{
 		this.title = title;
 		this.due_date = due_date;
 		this.body = body;
 	}
-	
+
 	public Note(Parcel source)
 	{
 		this.title = source.readString();
 		this.due_date = source.readString();
 		this.body = source.readString();
 	}
-	
 
 	public String getTitle()
 	{
@@ -56,8 +54,6 @@ public class Note implements Parcelable
 		this.body = body;
 	}
 
-
-
 	@Override
 	public int describeContents()
 	{
@@ -72,7 +68,7 @@ public class Note implements Parcelable
 		dest.writeString(this.due_date);
 		dest.writeString(this.body);
 	}
-	
+
 	public static final Parcelable.Creator CREATOR = new Parcelable.Creator()
 	{
 		public Note createFromParcel(Parcel in)

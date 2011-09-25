@@ -29,7 +29,8 @@ public class ListRow implements Parcelable
 
 	public ListRow(Parcel source)
 	{
-		Log.v("PARCEL", "ParcelData(Parcel source): time to put back parcel data");
+		Log.v("PARCEL",
+				"ParcelData(Parcel source): time to put back parcel data");
 		_id = source.readLong();
 		_listId = source.readLong();
 		_isChecked = source.readInt();
