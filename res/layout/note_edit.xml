@@ -26,15 +26,13 @@
 				    class="component.NotepadEditText"
 				    android:id="@+id/body"
 				    android:layout_width="fill_parent"
-				    android:layout_height="fill_parent"
 				    android:background="@android:color/white"
 				    android:textColor="@android:color/black"
 				    android:padding="5dp"
 				    android:scrollbars="vertical"
 				    android:fadingEdge="vertical"
 				    android:gravity="top"
-				    android:capitalize="sentences"
-				/>
+				    android:capitalize="sentences" android:layout_height="fill_parent"/>
 			</LinearLayout>
 	</LinearLayout>
 </ScrollView>	

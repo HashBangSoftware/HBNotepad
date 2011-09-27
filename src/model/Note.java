@@ -2,7 +2,6 @@ package model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 public class Note implements Parcelable
 {

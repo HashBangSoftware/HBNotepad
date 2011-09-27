@@ -2,7 +2,6 @@ package model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 public class ListRow implements Parcelable
 {
@@ -29,8 +28,6 @@ public class ListRow implements Parcelable
 
 	public ListRow(Parcel source)
 	{
-		Log.v("PARCEL",
-				"ParcelData(Parcel source): time to put back parcel data");
 		_id = source.readLong();
 		_listId = source.readLong();
 		_isChecked = source.readInt();
@@ -87,7 +84,6 @@ public class ListRow implements Parcelable
 	@Override
 	public void writeToParcel(Parcel arg0, int arg1)
 	{
-		Log.v("PARCEL", "Write to Parcel");
 		arg0.writeLong(_id);
 		arg0.writeLong(_listId);
 		arg0.writeInt(_isChecked);
