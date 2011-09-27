@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Daryl\'s Notepad V2</string>
+    <string name="app_name">#! Notepad Beta</string>
     <string name="no_notes">&lt;There are no notes&gt;</string>
     <string name="menu_insert">Add Note</string>
     <string name="menu_delete">Delete Note</string>
@@ -11,9 +11,9 @@
     <string name="empty"></string>
     <string name="date">Date</string>
     <string name="create_date">Created: </string>
-    <string name="add_row">Add Row</string>
+    <string name="add_row">Add Item</string>
     <string name="list_insert">Add List</string>
-    <string name="remove_row">Remove Row</string>
+    <string name="remove_row">Remove Item</string>
     <string name="save_list">Save List</string>
     <string name="save_note">Save Note</string>
     <string name="send_sms">Send to SMS</string>
