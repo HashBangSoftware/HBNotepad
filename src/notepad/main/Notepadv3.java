@@ -26,6 +26,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,6 +36,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 public class Notepadv3 extends TabActivity
 {
@@ -42,8 +44,9 @@ public class Notepadv3 extends TabActivity
 	private static final int ACTIVITY_EDIT = 1;
 	private static final int ACTIVITY_CREATE_LIST = 2;
 	private static final int ACTIVITY_EDIT_LIST = 3;
+	private static final int ABOUT_ID = 4;
 
-	private static final int INSERT_ID = Menu.FIRST;
+	private static final int INSERT_NOTE_ID = Menu.FIRST;
 	private static final int DELETE_ID = Menu.FIRST + 1;
 	private static final int INSERT_LIST_ID = Menu.FIRST + 2;
 	private static final int EDIT_TITLE_ID = Menu.FIRST + 3;
@@ -56,13 +59,14 @@ public class Notepadv3 extends TabActivity
 
 	private SimpleCursorAdapter lists;
 	private SimpleCursorAdapter notes;
+	private Resources res;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		Resources res = getResources();
+		res = getResources();
 
 		setContentView(R.layout.notes_list);
 		mDbHelper = new NotesDbAdapter(this);
@@ -126,10 +130,9 @@ public class Notepadv3 extends TabActivity
 	public boolean onCreateOptionsMenu(Menu menu)
 	{
 		super.onCreateOptionsMenu(menu);
-		menu.add(0, INSERT_ID, 0, R.string.menu_insert).setIcon(
-				android.R.drawable.ic_menu_add);
-		menu.add(0, INSERT_LIST_ID, 0, R.string.list_insert).setIcon(
-				android.R.drawable.ic_menu_add);
+		menu.add(0, INSERT_NOTE_ID, 0, R.string.menu_insert).setIcon(android.R.drawable.ic_menu_add);
+		menu.add(0, INSERT_LIST_ID, 0, R.string.list_insert).setIcon(android.R.drawable.ic_menu_add);
+		menu.add(0, ABOUT_ID, 0, R.string.about).setIcon(android.R.drawable.ic_menu_info_details);
 		return true;
 	}
 
@@ -138,14 +141,44 @@ public class Notepadv3 extends TabActivity
 	{
 		switch (item.getItemId())
 		{
-		case INSERT_ID:
+		case INSERT_NOTE_ID:
 			createNote();
 			return true;
 		case INSERT_LIST_ID:
 			createList();
 			return true;
+		case ABOUT_ID:
+			showAbout();
 		}
 		return super.onMenuItemSelected(featureId, item);
+	}
+
+	private void showAbout()
+	{
+		 AlertDialog.Builder alertbox = new AlertDialog.Builder(this);
+		 
+         // set the message to display
+		 alertbox.setIcon(android.R.drawable.ic_menu_info_details);
+		 alertbox.setTitle("About");
+		 TextView msg = new TextView(this);
+		 msg.setTextSize(15);
+		 msg.setPadding(2,2,2,2);
+		 msg.setText(res.getString(R.string.app_name) +"\n" +
+         		"Version: "+ res.getString(R.string.version) +"\n" +
+         		"Developed by \n" +
+         		"HashBang Software\n" +
+         		"Feedback/Contact: \n" +
+         		"hashbangsoftware@gmail.com");
+		 msg.setGravity(Gravity.CENTER_HORIZONTAL);
+		 alertbox.setView(msg);
+
+         // add a neutral button to the alert box and assign a click listener
+         alertbox.setNeutralButton("OK", new DialogInterface.OnClickListener()
+         {
+             // click listener on the alert box
+             public void onClick(DialogInterface arg0, int arg){}
+         });
+         alertbox.show();
 	}
 
 	@Override

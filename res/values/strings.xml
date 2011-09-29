@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">#! Notepad Beta</string>
+    <string name="app_name">#! Notepad</string>
     <string name="no_notes">&lt;There are no notes&gt;</string>
     <string name="menu_insert">Add Note</string>
     <string name="menu_delete">Delete Note</string>
@@ -19,4 +19,6 @@
     <string name="send_sms">Send to SMS</string>
     <string name="delete_note">Delete Note</string>
     <string name="edit_title">Edit Title</string>
+    <string name="about">About</string>
+    <string name="version">1.0 BETA</string>
 </resources>
