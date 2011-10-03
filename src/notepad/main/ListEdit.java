@@ -24,6 +24,7 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -91,8 +92,9 @@ public class ListEdit extends ListActivity
 	protected void onSaveInstanceState(Bundle outState)
 	{
 		super.onSaveInstanceState(outState);
-		outState.putParcelableArrayList(SAVED_DATA, toDoData);
 		saveState();
+		outState.putString("title", listTitle);
+		outState.putParcelableArrayList(SAVED_DATA, toDoData);
 		outState.putSerializable(NotesDbAdapter.KEY_ROWID, mListId);
 	}
 
@@ -111,7 +113,7 @@ public class ListEdit extends ListActivity
 
 	private void saveState()
 	{
-
+		this.getListView().requestFocus(); //Must steal focus in order to kick off the OnFocusChange event in the ListAdapter
 	}
 
 	@Override
@@ -206,6 +208,7 @@ public class ListEdit extends ListActivity
 
 	private void saveList()
 	{
+		this.getListView().requestFocus(); //Must steal focus in order to kick off the OnFocusChange event in the ListAdapter
 		String title = getTitle().toString();
 		if (mListId == null)
 		{
@@ -224,7 +227,8 @@ public class ListEdit extends ListActivity
 					toDoData.set(i, insertRow);
 				}
 			}
-		} else
+		}
+		else
 		{
 			for (int i = 0; i < toDoData.size(); i++)
 			{
@@ -262,9 +266,9 @@ public class ListEdit extends ListActivity
 			{
 				Cursor lists = mDbHelper.fetchList(mListId);
 				startManagingCursor(lists);
-				contextView.setTitle(lists.getString(lists
-						.getColumnIndexOrThrow(NotesDbAdapter.KEY_TITLE)));
-
+				listTitle = lists.getString(lists
+						.getColumnIndexOrThrow(NotesDbAdapter.KEY_TITLE));
+				contextView.setTitle(listTitle);
 				Cursor listDataRaw = mDbHelper.fetchListData(mListId);
 
 				if (listDataRaw.getCount() > 0)
@@ -283,14 +287,15 @@ public class ListEdit extends ListActivity
 						toDoData.add(row);
 					} while (listDataRaw.moveToNext());
 					customToDoAdapter.notifyDataSetChanged();
-				} else
-				{
 				}
-			} else
+				else{}
+			}
+			else
 			{
 				reloadSavedState(savedInstanceState);
 			}
-		} else
+		}
+		else
 		{
 			if (savedInstanceState == null)
 			{
@@ -330,6 +335,8 @@ public class ListEdit extends ListActivity
 
 	private void reloadSavedState(Bundle savedState)
 	{
+		listTitle = savedState.getString("title");
+		this.setTitle(listTitle);
 		ArrayList<Parcelable> savedRows = savedState
 				.getParcelableArrayList(SAVED_DATA);
 		for (int i = 0; i < savedRows.size(); i++)
@@ -338,5 +345,4 @@ public class ListEdit extends ListActivity
 		}
 		customToDoAdapter.notifyDataSetChanged();
 	}
-
 }
