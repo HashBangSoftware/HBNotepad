@@ -30,10 +30,10 @@ public class Notepadv3 extends TabActivity
 	private static final int ACTIVITY_EDIT_LIST = 3;
 	private static final int ABOUT_ID = 4;
 
-	private static final int INSERT_NOTE_ID = Menu.FIRST;
-	private static final int DELETE_ID = Menu.FIRST + 1;
-	private static final int INSERT_LIST_ID = Menu.FIRST + 2;
-	private static final int EDIT_TITLE_ID = Menu.FIRST + 3;
+	private static final int INSERT_NOTE_ID = 5;
+	private static final int DELETE_ID = 6;
+	private static final int INSERT_LIST_ID = 7;
+	private static final int EDIT_TITLE_ID = 8;
 	private static final String DEFAULT_TITLE = "Untitled";
 
 	private NotesDbAdapter mDbHelper;
@@ -133,6 +133,7 @@ public class Notepadv3 extends TabActivity
 			return true;
 		case ABOUT_ID:
 			showAbout();
+			return true;
 		}
 		return super.onMenuItemSelected(featureId, item);
 	}
@@ -200,27 +201,27 @@ public class Notepadv3 extends TabActivity
 	{
 		switch (item.getItemId())
 		{
-		case DELETE_ID:
-		{
-			AdapterContextMenuInfo deleteInfo = (AdapterContextMenuInfo) item
-					.getMenuInfo();
-			if (getTabHost().getCurrentTab() == 0) // Note
+			case DELETE_ID:
 			{
-				mDbHelper.deleteNote(deleteInfo.id);
-			} else if (getTabHost().getCurrentTab() == 1) // List
-			{
-				mDbHelper.deleteList(deleteInfo.id);
+				AdapterContextMenuInfo deleteInfo = (AdapterContextMenuInfo) item
+						.getMenuInfo();
+				if (getTabHost().getCurrentTab() == 0) // Note
+				{
+					mDbHelper.deleteNote(deleteInfo.id);
+				} else if (getTabHost().getCurrentTab() == 1) // List
+				{
+					mDbHelper.deleteList(deleteInfo.id);
+				}
+				fillData();
+				return true;
 			}
-			fillData();
-			return true;
-		}
-		case EDIT_TITLE_ID:
-		{
-			AdapterContextMenuInfo editInfo = (AdapterContextMenuInfo) item
-					.getMenuInfo();
-			updateListTitle(editInfo.id);
-			return true;
-		}
+			case EDIT_TITLE_ID:
+			{
+				AdapterContextMenuInfo editInfo = (AdapterContextMenuInfo) item
+						.getMenuInfo();
+				updateListTitle(editInfo.id);
+				return true;
+			}
 		}
 		return super.onContextItemSelected(item);
 	}
