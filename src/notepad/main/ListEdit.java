@@ -24,13 +24,17 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ListEdit extends ListActivity
@@ -52,15 +56,47 @@ public class ListEdit extends ListActivity
 	private ListAdapter customToDoAdapter;
 	private ListActivity contextView;
 
+	private Button addButton;
+	private Button removeButton;
+	private TextView titleView;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+
+		// Hide Title Bar
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+
 		// Setup the database adapter
 		mDbHelper = new NotesDbAdapter(this);
 		mDbHelper.open();
 		// Get the layout content
 		setContentView(R.layout.list_edit);
+
+		// Get layout components
+		addButton = (Button) findViewById(R.id.add_button);
+		removeButton = (Button) findViewById(R.id.remove_button);
+		titleView = (TextView) findViewById(R.id.list_title);
+
+		// Add button listners
+		addButton.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				addRow();
+			}
+		});
+
+		removeButton.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				removeRow();
+			}
+		});
 
 		// Provide context reference
 		contextView = this;
@@ -69,6 +105,7 @@ public class ListEdit extends ListActivity
 		mRowRemovalIds = new ArrayList<Long>();
 		customToDoAdapter = new ListAdapter(this, R.layout.list_item, toDoData);
 		registerForContextMenu(getListView());
+
 		setListAdapter(customToDoAdapter);
 
 		mListId = (savedInstanceState == null) ? null
@@ -76,16 +113,17 @@ public class ListEdit extends ListActivity
 						.getSerializable(NotesDbAdapter.KEY_ROWID);
 		if (mListId == null)
 		{
-			Bundle extras = getIntent().getExtras();
+			final Bundle extras = getIntent().getExtras();
 			mListId = extras != null ? extras.getLong(NotesDbAdapter.KEY_ROWID)
 					: null;
-			Date currentDate = new Date();
+			final Date currentDate = new Date();
 			mCreateDate = currentDate.toString().substring(0, 16);
 		} else
 		{
 		}
 
 		populateList(savedInstanceState);
+
 	}
 
 	@Override
@@ -113,7 +151,9 @@ public class ListEdit extends ListActivity
 
 	private void saveState()
 	{
-		this.getListView().requestFocus(); //Must steal focus in order to kick off the OnFocusChange event in the ListAdapter
+		this.getListView().requestFocus(); // Must steal focus in order to kick
+											// off the OnFocusChange event in
+											// the ListAdapter
 	}
 
 	@Override
@@ -160,7 +200,7 @@ public class ListEdit extends ListActivity
 		messageBody += contextView.getTitle().toString() + "\n";
 		for (int i = 0; i < toDoData.size(); i++)
 		{
-			ListRow tempRow = toDoData.get(i);
+			final ListRow tempRow = toDoData.get(i);
 			if (tempRow.getIsChecked() == 1)
 			{
 				messageBody += "\u2713" + " " + tempRow.getRowDescription()
@@ -171,7 +211,7 @@ public class ListEdit extends ListActivity
 			}
 		}
 
-		Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+		final Intent sendIntent = new Intent(Intent.ACTION_VIEW);
 		sendIntent.putExtra("sms_body", messageBody);
 		sendIntent.setType("vnd.android-dir/mms-sms");
 		startActivity(sendIntent);
@@ -195,7 +235,7 @@ public class ListEdit extends ListActivity
 			} else
 			// List exists in
 			{
-				ListRow removeRow = toDoData.get(toDoData.size() - 1);
+				final ListRow removeRow = toDoData.get(toDoData.size() - 1);
 				if (removeRow.getId() != -1)
 				{
 					mRowRemovalIds.add(removeRow.getId());
@@ -208,34 +248,34 @@ public class ListEdit extends ListActivity
 
 	private void saveList()
 	{
-		this.getListView().requestFocus(); //Must steal focus in order to kick off the OnFocusChange event in the ListAdapter
-		String title = getTitle().toString();
+		this.getListView().requestFocus(); // Must steal focus in order to kick
+											// off the OnFocusChange event in
+											// the ListAdapter
+		final String title = titleView.getText().toString();
 		if (mListId == null)
 		{
-			long id = mDbHelper.createList(title, mCreateDate);
+			final long id = mDbHelper.createList(title, mCreateDate);
 			if (id > 0)
 			{
 				mListId = id;
-
 				for (int i = 0; i < toDoData.size(); i++)
 				{
-					ListRow insertRow = toDoData.get(i);
-					long rowId = mDbHelper.createListRowData(mListId,
+					final ListRow insertRow = toDoData.get(i);
+					final long rowId = mDbHelper.createListRowData(mListId,
 							insertRow.getRowDescription(),
 							insertRow.getIsChecked());
 					insertRow.setId(rowId);
 					toDoData.set(i, insertRow);
 				}
 			}
-		}
-		else
+		} else
 		{
 			for (int i = 0; i < toDoData.size(); i++)
 			{
-				ListRow insertRow = toDoData.get(i);
+				final ListRow insertRow = toDoData.get(i);
 				if (insertRow.getId() == -1) // -1 = ID not set
 				{
-					long rowId = mDbHelper.createListRowData(mListId,
+					final long rowId = mDbHelper.createListRowData(mListId,
 							insertRow.getRowDescription(),
 							insertRow.getIsChecked());
 					insertRow.setId(rowId);
@@ -264,18 +304,18 @@ public class ListEdit extends ListActivity
 		{
 			if (savedInstanceState == null)
 			{
-				Cursor lists = mDbHelper.fetchList(mListId);
+				final Cursor lists = mDbHelper.fetchList(mListId);
 				startManagingCursor(lists);
 				listTitle = lists.getString(lists
 						.getColumnIndexOrThrow(NotesDbAdapter.KEY_TITLE));
-				contextView.setTitle(listTitle);
-				Cursor listDataRaw = mDbHelper.fetchListData(mListId);
+				titleView.setText(listTitle);
+				final Cursor listDataRaw = mDbHelper.fetchListData(mListId);
 
 				if (listDataRaw.getCount() > 0)
 				{
 					do
 					{
-						ListRow row = new ListRow(
+						final ListRow row = new ListRow(
 								listDataRaw.getLong(listDataRaw
 										.getColumnIndex("_id")),
 								listDataRaw.getLong(listDataRaw
@@ -287,19 +327,18 @@ public class ListEdit extends ListActivity
 						toDoData.add(row);
 					} while (listDataRaw.moveToNext());
 					customToDoAdapter.notifyDataSetChanged();
+				} else
+				{
 				}
-				else{}
-			}
-			else
+			} else
 			{
 				reloadSavedState(savedInstanceState);
 			}
-		}
-		else
+		} else
 		{
 			if (savedInstanceState == null)
 			{
-				AlertDialog.Builder alert = new AlertDialog.Builder(this);
+				final AlertDialog.Builder alert = new AlertDialog.Builder(this);
 				alert.setTitle("Please enter a title");
 
 				// Set an EditText view to get user input
@@ -314,7 +353,8 @@ public class ListEdit extends ListActivity
 							public void onClick(DialogInterface dialog,
 									int whichButton)
 							{
-								String value = titleInput.getText().toString();
+								final String value = titleInput.getText()
+										.toString();
 								if (!value.equals(null))
 								{
 									listTitle = value;
@@ -322,7 +362,7 @@ public class ListEdit extends ListActivity
 								{
 									listTitle = DEFAULT_TITLE;
 								}
-								contextView.setTitle(listTitle);
+								titleView.setText(listTitle);
 							}
 						});
 				alert.show();
@@ -336,8 +376,8 @@ public class ListEdit extends ListActivity
 	private void reloadSavedState(Bundle savedState)
 	{
 		listTitle = savedState.getString("title");
-		this.setTitle(listTitle);
-		ArrayList<Parcelable> savedRows = savedState
+		titleView.setText(listTitle);
+		final ArrayList<Parcelable> savedRows = savedState
 				.getParcelableArrayList(SAVED_DATA);
 		for (int i = 0; i < savedRows.size(); i++)
 		{

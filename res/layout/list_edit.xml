@@ -1,15 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      android:layout_width="fill_parent"
-    	android:layout_height="wrap_content">
-    <ListView android:id="@+id/android:list"
-          android:layout_width="fill_parent"
-        	android:layout_height="wrap_content"
-        	android:descendantFocusability="beforeDescendants"
-        	/>
-    <TextView android:id="@android:id/empty"
+<TableLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:text="Your list is empty"
-    />
-</LinearLayout>
+    android:stretchColumns="*"
+    >
+	<TableRow 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        android:layout_gravity="center_horizontal" >
+		<LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" 
+			android:layout_height="fill_parent" 
+			android:gravity="center_vertical"
+			xmlns:android="http://schemas.android.com/apk/res/android">
+			<Button android:background = "@android:drawable/ic_menu_add"
+					android:id="@+id/add_button" 
+					android:layout_width="50sp"
+					android:layout_height="50sp"
+					android:textSize="20sp">
+			</Button>
+			<TextView android:id="@+id/list_title"
+					  android:layout_width="wrap_content"
+					  android:layout_height="50sp"
+					  android:layout_weight="1"
+					  android:gravity="center_vertical|center_horizontal"
+					  android:textSize="20sp"
+					  android:textStyle="bold"
+					  android:inputType="textMultiLine">
+			</TextView>
+			<Button android:id="@+id/remove_button"
+					android:background = "@android:drawable/ic_menu_close_clear_cancel"
+					android:layout_width="50sp"
+					android:layout_height="50sp"
+					android:textSize="20sp">
+			</Button>
+		</LinearLayout>
+	</TableRow>
+	<TableRow 
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        android:layout_gravity="center_horizontal">
+		<LinearLayout
+		    	android:layout_width="fill_parent"
+		    	android:layout_height="wrap_content">
+		    <ListView android:id="@+id/android:list"
+		          android:layout_width="fill_parent"
+		        	android:layout_height="wrap_content"
+		        	android:descendantFocusability="beforeDescendants"
+		        	/>
+		    <TextView android:id="@android:id/empty"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:text="Your list is empty" />
+		</LinearLayout>
+	</TableRow>
+</TableLayout>
