@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="notepad.main" android:versionCode="2" android:versionName="BETA">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="notepad.main" android:versionCode="3" android:versionName="1.0">
     <uses-sdk android:minSdkVersion="8" 
           android:targetSdkVersion="9"
           android:maxSdkVersion="13" />
-    <application android:icon="@drawable/launcher" android:label="#! Notepad BETA" android:debuggable="false">
+    <application android:icon="@drawable/launcher" android:label="#! Notepad" android:debuggable="true">
         <activity android:name=".Notepadv3" android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

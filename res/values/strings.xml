@@ -20,5 +20,5 @@
     <string name="delete_note">Delete Note</string>
     <string name="edit_title">Edit Title</string>
     <string name="about">About</string>
-    <string name="version">1.0 BETA</string>
+    <string name="version">1.0</string>
 </resources>
