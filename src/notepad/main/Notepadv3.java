@@ -14,6 +14,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.EditText;
@@ -74,6 +75,46 @@ public class Notepadv3 extends TabActivity
 		getTabHost().addTab(spec);
 
 		getTabHost().setCurrentTab(0);
+		
+		//0 = Notes, 1 = Lists
+		
+		getTabWidget().getChildAt(0).setOnClickListener(new OnClickListener()
+		{
+		    @Override
+		    public void onClick(View v)
+		    {
+		    	 //Click on the tab header
+		        if(getTabHost().getCurrentTab() == 0)
+		        {
+		        	//Current view of notes is shown, create a new note.
+		        	createNote();
+		        }
+		        else
+		        {
+		        	getTabHost().setCurrentTab(0);
+		        }
+		    }
+		});
+		
+		getTabWidget().getChildAt(1).setOnClickListener(new OnClickListener()
+		{
+		    //Click on the tab header
+			@Override
+		    public void onClick(View v)
+		    {
+		        if(getTabHost().getCurrentTab() == 1)
+		        {
+		        	//Current view of lists is shown, create a new list.
+		        	createList();
+		        }
+		        else
+		        {
+		        	getTabHost().setCurrentTab(1);
+		        }
+		    }
+		});
+
+
 		notesView.setOnItemClickListener(onNoteClick);
 		listsView.setOnItemClickListener(onListClick);
 		fillData();
