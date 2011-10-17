@@ -221,7 +221,7 @@ public class Notepadv3 extends TabActivity
 					+ " "
 					+ mCursor.getString(mCursor
 							.getColumnIndexOrThrow(NotesDbAdapter.KEY_CREATE_DATE)));
-			menu.add(0, DELETE_ID, 0, R.string.menu_delete);
+			menu.add(0, DELETE_ID, 0, R.string.note_delete);
 		} else
 		// List
 		{
@@ -232,7 +232,7 @@ public class Notepadv3 extends TabActivity
 					+ mCursor.getString(mCursor
 							.getColumnIndexOrThrow(NotesDbAdapter.KEY_CREATE_DATE)));
 			menu.add(0, EDIT_TITLE_ID, 0, R.string.edit_title);
-			menu.add(0, DELETE_ID, 0, R.string.menu_delete);
+			menu.add(0, DELETE_ID, 0, R.string.list_delete);
 
 		}
 	}

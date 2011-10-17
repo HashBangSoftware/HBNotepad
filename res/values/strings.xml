@@ -3,7 +3,7 @@
     <string name="app_name">#! Notepad</string>
     <string name="no_notes">&lt;There are no notes&gt;</string>
     <string name="menu_insert">Add Note</string>
-    <string name="menu_delete">Delete Note</string>
+    <string name="note_delete">Delete Note</string>
     <string name="title">Title</string>
     <string name="body">Body</string>
     <string name="confirm">SAVE</string>
@@ -21,4 +21,5 @@
     <string name="edit_title">Edit Title</string>
     <string name="about">About</string>
     <string name="version">1.0</string>
+    <string name="list_delete">Delete List</string>
 </resources>
