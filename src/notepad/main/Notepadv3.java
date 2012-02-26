@@ -80,7 +80,6 @@ public class Notepadv3 extends TabActivity
 		
 		getTabWidget().getChildAt(0).setOnClickListener(new OnClickListener()
 		{
-		    @Override
 		    public void onClick(View v)
 		    {
 		    	 //Click on the tab header
@@ -99,8 +98,7 @@ public class Notepadv3 extends TabActivity
 		getTabWidget().getChildAt(1).setOnClickListener(new OnClickListener()
 		{
 		    //Click on the tab header
-			@Override
-		    public void onClick(View v)
+			public void onClick(View v)
 		    {
 		        if(getTabHost().getCurrentTab() == 1)
 		        {

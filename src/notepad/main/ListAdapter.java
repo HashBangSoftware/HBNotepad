@@ -35,7 +35,6 @@ public class ListAdapter extends BaseAdapter
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
 
-	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
 		final ListRow row = this.todoItems.get(position);
@@ -63,7 +62,6 @@ public class ListAdapter extends BaseAdapter
 
 			rowDesc.setOnFocusChangeListener(new View.OnFocusChangeListener()
 			{
-				@Override
 				public void onFocusChange(View v, boolean hasFocus)
 				{
 					EditText et = (EditText) v;
@@ -89,19 +87,16 @@ public class ListAdapter extends BaseAdapter
 		return (v);
 	}
 
-	@Override
 	public int getCount()
 	{
 		return todoItems.size();
 	}
 
-	@Override
 	public Object getItem(int position)
 	{
 		return todoItems.get(position);
 	}
 
-	@Override
 	public long getItemId(int position)
 	{
 		return position;

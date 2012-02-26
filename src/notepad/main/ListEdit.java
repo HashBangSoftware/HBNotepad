@@ -82,7 +82,6 @@ public class ListEdit extends ListActivity
 		// Add button listners
 		addButton.setOnClickListener(new OnClickListener()
 		{
-			@Override
 			public void onClick(View v)
 			{
 				addRow();
@@ -91,7 +90,6 @@ public class ListEdit extends ListActivity
 
 		removeButton.setOnClickListener(new OnClickListener()
 		{
-			@Override
 			public void onClick(View v)
 			{
 				removeRow();
